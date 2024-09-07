@@ -11,7 +11,8 @@ public class CreatureHut : MonoBehaviour
     public void Start()
     {
         creatureManager = CreatureManager.Instance;
-        spawnTimer = new Timer(spawnRate.x, () => { creatureManager.SpawnNewCreature(); }, spawnRate.y);
+        creatureManager.SpawnNewCreature(transform.position);
+        spawnTimer = new Timer(spawnRate.x, () => { creatureManager.SpawnNewCreature(transform.position); }, spawnRate.y);
     }
 
     private void Update()
