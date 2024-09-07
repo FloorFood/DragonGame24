@@ -9,10 +9,13 @@ public class CreatureManager : MonoBehaviour
     [SerializeField] ProfessionConfig professionConfig;
     [SerializeField] Creature currentlyHoveredCreature;
     [SerializeField] Creature currentlySelectedCreature;
+    [SerializeField] GameObject dragon;
 
     List<IProfession> professions = new List<IProfession>();
     List<Creature> activeCreatures = new List<Creature>();
 
+    private Transform dragging = null;
+    private Vector3 offset;
     static CreatureManager instance;
     public static CreatureManager Instance
     {
@@ -49,6 +52,12 @@ public class CreatureManager : MonoBehaviour
     private void Update()
     {
         HoverCreature();
+        /** BoxCollider2D drag_coll = dragon.GetComponent<BoxCollider2D>();
+        if (currentlySelectedCreature != null && currentlySelectedCreature.GetComponent<CircleCollider2D>().bounds.Intersects(drag_coll.bounds))
+        {
+            dragging = null;
+            currentlySelectedCreature.GetComponent<GameObject>().SetActive(false);
+        }**/
     }
     public void HoverCreature()
     {
@@ -57,6 +66,25 @@ public class CreatureManager : MonoBehaviour
         if (hits.Length > 0 && hits[0].TryGetComponent(out Creature creature))
         {
             currentlyHoveredCreature = creature;
+            if (Input.GetMouseButtonDown(0))
+            {
+                currentlySelectedCreature = creature;
+                dragging = currentlySelectedCreature.transform;
+                // And record the offset.
+                offset = dragging.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+            else if (Input.GetMouseButtonUp(0)) 
+            {
+                // Stop dragging.
+                dragging = null;
+            }
+
+            if (dragging != null) 
+            {
+                // Move object, taking into account original offset.
+                dragging.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+                currentlySelectedCreature.GetComponent<Animator>().Play("Base Layer.Creature_Walk");
+            }
         }
         else
         {
