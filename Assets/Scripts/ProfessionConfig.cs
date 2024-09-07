@@ -6,7 +6,7 @@ using System.Linq;
 [CreateAssetMenu]
 public class ProfessionConfig : ScriptableObject
 {
-    public class Entry
+    [System.Serializable]public class Entry
     {
         public ProfessionType type;
         public Sprite sprite;
