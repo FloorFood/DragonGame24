@@ -75,7 +75,7 @@ public class CreatureManager : MonoBehaviour
         {
             var creature = Instantiate(creaturePrefab, position, Quaternion.identity, transform);
             creature.SpawnIn(OnCreatureDeath);
-            creature.SetProfession(professions.FirstOrDefault(p => p.Profession == ProfessionType.MINER));
+            creature.SetProfession(professions.FirstOrDefault(p => p.Profession == ProfessionType.LUMBERJACK));
             activeCreatures.Add(creature);
         }
     }

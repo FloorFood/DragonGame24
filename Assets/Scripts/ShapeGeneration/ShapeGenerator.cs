@@ -18,6 +18,7 @@ public class ShapeGenerator : MonoBehaviour
     public bool createNewSharedMaterial = false;
     public bool addRigidbody = false;
     public Material shapeMaterial;
+    public bool trigger;
 
     public PixelMatrix matrix;
 
@@ -165,6 +166,7 @@ public class ShapeGenerator : MonoBehaviour
             clone.transform.SetParent(transform);
             clone.transform.localPosition = new Vector2(-(input.width / 200f), -(input.height / 200f));
             var polygonColl = clone.AddComponent<PolygonCollider2D>();
+            polygonColl.isTrigger = trigger;
             cashedColliders.Add(polygonColl);
             polygonColl.pathCount = s.edges.Count;
             if (s.edges.Count>0)
@@ -232,6 +234,7 @@ public class ShapeGenerator : MonoBehaviour
             clone.transform.SetParent(transform);
             clone.transform.localPosition = new Vector2(-(input.width / 200f), -(input.height / 200f));
             var polygonColl = clone.AddComponent<PolygonCollider2D>();
+            polygonColl.isTrigger = trigger;
             cashedColliders.Add(polygonColl);
             polygonColl.pathCount = s.edges.Count;
             if (s.edges.Count > 0)
